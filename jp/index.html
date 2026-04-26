@@ -137,17 +137,17 @@
             color: #333;
         }
 
-        /* --- IoT System Specifics --- */
+        /* --- IoT System Specifics (Updated to Theme Colors) --- */
         .iot-wrapper {
             font-family: 'Noto Sans TC', 'Noto Sans JP', sans-serif;
-            background: linear-gradient(135deg, #fff5f9 0%, #fff0f5 100%);
-            color: #2d2d2d;
+            background: linear-gradient(135deg, #fdfcf9 0%, #f9d8e2 100%);
+            color: #1a1a1a;
             line-height: 1.7;
-            --iot-primary: #ff9cc7;
-            --iot-primary-dark: #ff6ba8;
-            --iot-secondary: #a3d8ff;
-            --iot-card-bg: #ffffff;
-            --iot-text: #2d2d2d;
+            --iot-primary: #c62839; /* Japan Red */
+            --iot-primary-dark: #a01f2d;
+            --iot-secondary: #f9d8e2; /* Sakura Pink */
+            --iot-card-bg: rgba(255, 255, 255, 0.9);
+            --iot-text: #1a1a1a;
             --iot-radius: 20px;
             --iot-content-max: 1100px;
             border-radius: 30px;
@@ -155,9 +155,9 @@
             box-shadow: 0 10px 40px rgba(0,0,0,0.1);
         }
         .dark .iot-wrapper {
-            background: linear-gradient(135deg, #2a1625 0%, #1a1016 100%);
-            --iot-card-bg: #382231;
-            --iot-text: #f0f0f0;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2a1625 100%);
+            --iot-card-bg: rgba(40, 40, 40, 0.9);
+            --iot-text: #fdfcf9;
             color: var(--iot-text);
         }
         .iot-wrapper header {
@@ -186,7 +186,7 @@
             z-index: 99;
             padding: 1.4rem 0;
         }
-        .dark .iot-wrapper nav { background: rgba(30,20,25,0.92); }
+        .dark .iot-wrapper nav { background: rgba(30,30,30,0.92); }
         .iot-wrapper nav ul {
             list-style: none;
             display: flex;
@@ -206,13 +206,14 @@
             border-radius: var(--iot-radius);
             transition: all 0.3s ease;
             background: rgba(255,255,255,0.5);
+            border: 1px solid rgba(198, 40, 57, 0.2);
         }
         .dark .iot-wrapper nav a { background: rgba(255,255,255,0.1); }
         .iot-wrapper nav a:hover {
             background: var(--iot-primary);
             color: white;
             transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(255,108,170,0.35);
+            box-shadow: 0 8px 20px rgba(198, 40, 57, 0.3);
         }
         .iot-wrapper main {
             max-width: var(--iot-content-max);
@@ -223,7 +224,7 @@
         .iot-wrapper .hero { text-align: center; }
         .iot-wrapper .intro-text {
             font-size: 1.35rem;
-            color: #444;
+            color: #1a1a1a;
             max-width: 820px;
             margin: 0 auto;
             padding: 0 1rem;
@@ -249,15 +250,18 @@
             display: flex;
             flex-direction: column;
             justify-content: center;
+            border: 1px solid rgba(198, 40, 57, 0.1);
         }
         .iot-wrapper .card:hover {
             transform: translateY(-10px);
-            box-shadow: 0 18px 45px rgba(255,108,170,0.2);
+            box-shadow: 0 18px 45px rgba(198, 40, 57, 0.2);
+            border-color: var(--iot-primary);
         }
         .iot-wrapper .card h3 {
-            color: var(--iot-primary-dark);
+            color: var(--iot-primary);
             font-size: 1.65rem;
             margin-bottom: 1.2rem;
+            font-weight: 700;
         }
         .iot-wrapper .card p { font-size: 1.1rem; }
         .iot-wrapper .quick-links {
@@ -266,7 +270,7 @@
             margin: 0 auto;
         }
         .iot-wrapper .quick-links h2 {
-            color: var(--iot-primary-dark);
+            color: var(--iot-primary);
             font-size: 2.3rem;
             margin-bottom: 2.4rem;
         }
@@ -279,8 +283,8 @@
         }
         .iot-wrapper .quick-links a {
             display: block;
-            background: var(--iot-secondary);
-            color: #1e3a5a;
+            background: #8bac6b; /* Matcha Green */
+            color: white;
             padding: 1.2rem 2.4rem;
             border-radius: 999px;
             text-decoration: none;
@@ -288,26 +292,19 @@
             font-size: 1.2rem;
             transition: all 0.3s;
         }
-        .dark .iot-wrapper .quick-links a { background: #3b7da8; color: white; }
         .iot-wrapper .quick-links a:hover {
-            background: #89d0ff;
+            background: #7a9a5a;
             transform: scale(1.05);
-            box-shadow: 0 10px 30px rgba(163,216,255,0.4);
+            box-shadow: 0 10px 30px rgba(139, 172, 107, 0.4);
         }
         .iot-wrapper footer {
             text-align: center;
             padding: 5rem 1.5rem 4rem;
-            color: #666;
+            color: #1a1a1a;
             font-size: 1.05rem;
-            border-top: 1px solid #eee;
+            border-top: 1px solid rgba(198, 40, 57, 0.1);
         }
         .dark .iot-wrapper footer { border-top-color: #444; color: #999; }
-        @media (max-width: 768px) {
-            .iot-wrapper header { padding: 4rem 1.2rem 3rem; }
-            .iot-wrapper header h1 { font-size: 3.2rem; }
-            .iot-wrapper header p { font-size: 1.25rem; }
-            .iot-wrapper nav a { padding: 0.8rem 1.4rem; font-size: 1.05rem; }
-        }
     </style>
 </head>
 <body class="transition-colors duration-500 pb-24">
@@ -438,7 +435,7 @@
                     <div class="mb-8">
                         <h3 class="text-xl font-bold text-japan-red border-b-2 border-dashed border-sakura-pink pb-2 mb-4">🎀 裝飾手持</h3>
                         <div class="grid grid-cols-3 gap-2">
-                            <button class="bg-white dark:bg-gray-700 p-4 rounded-xl border-2 border-sakura-pink hover:bg-japan-red hover:text-white transition" onclick="dress('hand', '和傘', 'わがさ', 'Wagasa', '🌂', '和紙製作的傳統雨傘。')">
+                            <button class="bg-white dark:bg-gray-700 p-4 rounded-xl border-2 border-sakura-pink hover:bg-japan-red hover:text-white transition" onclick="dress('hand', '和傘', 'わ發さ', 'Wagasa', '🌂', '和紙製作的傳統雨傘。')">
                                 <span class="block text-xl">🌂</span>
                             </button>
                             <button class="bg-white dark:bg-gray-700 p-4 rounded-xl border-2 border-sakura-pink hover:bg-japan-red hover:text-white transition" onclick="dress('hand', '三色糰子', '🍡', 'Dango', '🍡', '賞櫻必備甜點。')">
@@ -532,7 +529,7 @@
                             嘿～你也想學日語對不對？✨<br>
                             這裡來陪你啦～(｡･ω･｡)<br>
                             超多輕鬆互動、發音小練習、日常會話、N5衝刺～全部都有哦～<br>
-                            一起變成日語小達人吧～٩(ˊᗜˋ*)و
+                            一起變成日語小達人吧～٩(ˊᗜˋ*)uo
                         </p>
                     </section>
 

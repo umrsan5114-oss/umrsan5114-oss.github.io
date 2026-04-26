@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>S. A. I. J. A. 🌸</title>
+    <title>S. A. I. J. A. 🌸 & JLPT 數據</title>
     <link href="https://fonts.googleapis.com/css2?family=Cute+Font&family=Noto+Sans+JP:wght@400;500;700&family=Noto+Sans+TC:wght@400;500;700&family=Shippori+Mincho:wght@400;700;900&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
-    <script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> <script>
         tailwind.config = {
             darkMode: 'class',
             theme: {
@@ -137,15 +137,15 @@
             color: #333;
         }
 
-        /* --- IoT System Specifics (Updated to Theme Colors) --- */
+        /* --- IoT System Specifics --- */
         .iot-wrapper {
             font-family: 'Noto Sans TC', 'Noto Sans JP', sans-serif;
             background: linear-gradient(135deg, #fdfcf9 0%, #f9d8e2 100%);
             color: #1a1a1a;
             line-height: 1.7;
-            --iot-primary: #c62839; /* Japan Red */
+            --iot-primary: #c62839; 
             --iot-primary-dark: #a01f2d;
-            --iot-secondary: #f9d8e2; /* Sakura Pink */
+            --iot-secondary: #f9d8e2; 
             --iot-card-bg: rgba(255, 255, 255, 0.9);
             --iot-text: #1a1a1a;
             --iot-radius: 20px;
@@ -305,6 +305,68 @@
             border-top: 1px solid rgba(198, 40, 57, 0.1);
         }
         .dark .iot-wrapper footer { border-top-color: #444; color: #999; }
+
+        /* --- Stats/Chart Specifics (Merged from File 2) --- */
+        .stats-container {
+            max-width: 1000px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(203, 57, 65, 0.1);
+            border: 1px solid #f1d5d9;
+            margin: 0 auto;
+        }
+        .dark .stats-container {
+            background: rgba(40, 40, 40, 0.9);
+            border-color: rgba(255,255,255,0.1);
+        }
+        .stats-container h2 {
+            text-align: center;
+            color: #CB3941;
+            font-size: 1.8rem;
+            margin-bottom: 40px;
+            letter-spacing: 2px;
+            border-bottom: 2px solid #CB3941;
+            display: inline-block;
+            left: 50%;
+            position: relative;
+            transform: translateX(-50%);
+            padding-bottom: 10px;
+        }
+        .chart-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 50px;
+        }
+        .chart-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: transform 0.3s ease;
+        }
+        .chart-item:hover {
+            transform: translateY(-5px);
+        }
+        .chart-label {
+            margin-top: 20px;
+            font-weight: bold;
+            font-size: 1.2rem;
+            color: #444;
+        }
+        .dark .chart-label { color: #fdfcf9; }
+        .percentage-badge {
+            margin-top: 8px;
+            padding: 4px 12px;
+            background-color: #91AD70;
+            color: white;
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+        .chart-item canvas {
+            max-width: 100% !important;
+            height: auto !important;
+        }
     </style>
 </head>
 <body class="transition-colors duration-500 pb-24">
@@ -584,16 +646,37 @@
             </div>
         </section>
 
+        <section id="page-stats" class="hidden page-fade space-y-6">
+            <div class="stats-container">
+                <h2>2025年 7月 JLPT 考試結果分析</h2>
+
+                <div class="chart-grid">
+                    <div class="chart-item">
+                        <canvas id="n1Chart"></canvas>
+                        <div class="chart-label">N1 級別</div>
+                        <div class="percentage-badge">合格率 28.7%</div>
+                    </div>
+
+                    <div class="chart-item">
+                        <canvas id="n2Chart"></canvas>
+                        <div class="chart-label">N2 級別</div>
+                        <div class="percentage-badge">合格率 33.1%</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
     </main>
 
-    <nav class="fixed bottom-0 left-0 right-0 glass border-t border-sakura-pink/30 px-2 py-3 flex justify-around items-center z-[100]">
-        <button onclick="showPage('home')" class="nav-item flex flex-col items-center text-japan-red"><span class="text-2xl">🏠</span><span class="text-[10px] font-bold">首頁</span></button>
-        <button onclick="showPage('quiz')" class="nav-item flex flex-col items-center text-gray-400"><span class="text-2xl">📝</span><span class="text-[10px] font-bold">測驗</span></button>
-        <button onclick="showPage('culture')" class="nav-item flex flex-col items-center text-gray-400"><span class="text-2xl">🌸</span><span class="text-[10px] font-bold">文化</span></button>
-        <button onclick="showPage('dict')" class="nav-item flex flex-col items-center text-gray-400"><span class="text-2xl">📖</span><span class="text-[10px] font-bold">字典</span></button>
-        <button onclick="showPage('tasks')" class="nav-item flex flex-col items-center text-gray-400"><span class="text-2xl">📋</span><span class="text-[10px] font-bold">任務</span></button>
-        <button onclick="showPage('videos')" class="nav-item flex flex-col items-center text-gray-400"><span class="text-2xl">📺</span><span class="text-[10px] font-bold">影片</span></button>
-        <button onclick="showPage('iot')" class="nav-item flex flex-col items-center text-gray-400"><span class="text-2xl">🤖</span><span class="text-[10px] font-bold">IoT系統</span></button>
+    <nav class="fixed bottom-0 left-0 right-0 glass border-t border-sakura-pink/30 px-2 py-3 flex justify-around items-center z-[100] overflow-x-auto no-scrollbar">
+        <button onclick="showPage('home')" class="nav-item flex flex-col items-center text-japan-red min-w-[50px]"><span class="text-2xl">🏠</span><span class="text-[10px] font-bold">首頁</span></button>
+        <button onclick="showPage('quiz')" class="nav-item flex flex-col items-center text-gray-400 min-w-[50px]"><span class="text-2xl">📝</span><span class="text-[10px] font-bold">測驗</span></button>
+        <button onclick="showPage('culture')" class="nav-item flex flex-col items-center text-gray-400 min-w-[50px]"><span class="text-2xl">🌸</span><span class="text-[10px] font-bold">文化</span></button>
+        <button onclick="showPage('dict')" class="nav-item flex flex-col items-center text-gray-400 min-w-[50px]"><span class="text-2xl">📖</span><span class="text-[10px] font-bold">字典</span></button>
+        <button onclick="showPage('tasks')" class="nav-item flex flex-col items-center text-gray-400 min-w-[50px]"><span class="text-2xl">📋</span><span class="text-[10px] font-bold">任務</span></button>
+        <button onclick="showPage('videos')" class="nav-item flex flex-col items-center text-gray-400 min-w-[50px]"><span class="text-2xl">📺</span><span class="text-[10px] font-bold">影片</span></button>
+        <button onclick="showPage('iot')" class="nav-item flex flex-col items-center text-gray-400 min-w-[50px]"><span class="text-2xl">🤖</span><span class="text-[10px] font-bold">IoT系統</span></button>
+        <button onclick="showPage('stats')" class="nav-item flex flex-col items-center text-gray-400 min-w-[50px]"><span class="text-2xl">📊</span><span class="text-[10px] font-bold">數據</span></button>
     </nav>
 
     <div class="modal-overlay" id="modal">
@@ -645,7 +728,8 @@
             document.getElementById(`page-${id}`).classList.remove('hidden');
             document.querySelectorAll('.nav-item').forEach(n => n.classList.replace('text-japan-red', 'text-gray-400'));
             
-            const mapping = { home: '🏠', quiz: '📝', culture: '🌸', dict: '📖', tasks: '📋', iot: '🤖', videos: '📺' };
+            // Added Stats to mapping
+            const mapping = { home: '🏠', quiz: '📝', culture: '🌸', dict: '📖', tasks: '📋', iot: '🤖', videos: '📺', stats: '📊' };
             const activeNav = Array.from(document.querySelectorAll('.nav-item')).find(n => n.innerHTML.includes(mapping[id]));
             if(activeNav) activeNav.classList.replace('text-gray-400', 'text-japan-red');
             
@@ -818,7 +902,68 @@
             modal.style.display = 'flex';
         }
 
-        /* --- INIT --- */
+        /* --- INIT STATS CHARTS --- */
+        function initCharts() {
+            const chartColors = {
+                pass: '#91AD70',    // 抹茶綠
+                fail: '#CB3941',    // 櫻花紅
+                hoverPass: '#A3BD84',
+                hoverFail: '#D9535A'
+            };
+
+            const commonOptions = {
+                cutout: '65%',
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: { padding: 20, font: { size: 14 } }
+                    },
+                    tooltip: {
+                        backgroundColor: 'rgba(255, 255, 255, 0.9)',
+                        titleColor: '#333',
+                        bodyColor: '#333',
+                        borderColor: '#ddd',
+                        borderWidth: 1,
+                        displayColors: true
+                    }
+                }
+            };
+
+            // N1 Data
+            new Chart(document.getElementById('n1Chart'), {
+                type: 'doughnut',
+                data: {
+                    labels: ['合格 (53,534)', '不合格 (132,997)'],
+                    datasets: [{
+                        data: [53534, 132997],
+                        backgroundColor: [chartColors.pass, chartColors.fail],
+                        hoverBackgroundColor: [chartColors.hoverPass, chartColors.hoverFail],
+                        borderWidth: 5,
+                        borderColor: '#ffffff'
+                    }]
+                },
+                options: commonOptions
+            });
+
+            // N2 Data
+            new Chart(document.getElementById('n2Chart'), {
+                type: 'doughnut',
+                data: {
+                    labels: ['合格 (56,450)', '不合格 (114,095)'],
+                    datasets: [{
+                        data: [56450, 114095],
+                        backgroundColor: [chartColors.pass, chartColors.fail],
+                        hoverBackgroundColor: [chartColors.hoverPass, chartColors.hoverFail],
+                        borderWidth: 5,
+                        borderColor: '#ffffff'
+                    }]
+                },
+                options: commonOptions
+            });
+        }
+
+
+        /* --- INIT & EVENT LISTENERS --- */
         document.getElementById('themeToggle').onclick = () => {
             document.documentElement.classList.toggle('dark');
             document.getElementById('themeToggle').innerText = document.documentElement.classList.contains('dark') ? '☀️' : '🌙';
@@ -875,6 +1020,9 @@
             document.getElementById('streakBig').innerText = state.streak;
             updateMissionUI();
             updateSummary();
+            
+            // Initialize the charts
+            initCharts();
         })();
     </script>
 </body>

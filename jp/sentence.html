@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>找我聊天 – 山田さん！IoT智慧學習系統</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Noto+Sans+JP:wght@400;500;700&family=Cute+Font&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      /* 統一色系：跟隨主系統 */
+      --primary: #c62839;       /* Japan Red */
+      --primary-dark: #a01f2d;
+      --secondary: #f9d8e2;     /* Sakura Pink */
+      --accent-green: #8bac6b;  /* Matcha Green */
+      --bg-light: #fdfcf9;      /* Shoji White */
+      --card-bg: rgba(255, 255, 255, 0.9);
+      --text: #1a1a1a;          /* Ink Black */
+      --radius: 20px;
+      --content-max: 1140px;
+      --section-gap: 3rem;
+    }
+
+    * { margin:0; padding:0; box-sizing:border-box; }
+
+    body {
+      font-family: 'Noto Sans TC', 'Noto Sans JP', sans-serif;
+      /* 背景漸變與主系統呼應 */
+      background: linear-gradient(135deg, var(--bg-light) 0%, var(--secondary) 100%);
+      color: var(--text);
+      min-height: 100vh;
+      line-height: 1.65;
+    }
+
+    header {
+      background: var(--primary);
+      color: white;
+      text-align: center;
+      padding: 5rem 1.5rem 3.5rem;
+    }
+
+    header h1 {
+      font-family: 'Cute Font', cursive;
+      font-size: clamp(2.8rem, 7vw, 4.4rem);
+      margin-bottom: 1rem;
+      text-shadow: 3px 3px 10px rgba(0,0,0,0.2);
+    }
+
+    header p {
+      font-size: 1.4rem;
+      max-width: 760px;
+      margin: 0 auto;
+      opacity: 0.95;
+    }
+
+    nav {
+      background: rgba(255,255,255,0.94);
+      backdrop-filter: blur(12px);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.07);
+      position: sticky;
+      top: 0;
+      z-index: 999;
+      padding: 1.5rem 0;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 1.5rem 2.8rem;
+      max-width: var(--content-max);
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+
+    nav a {
+      color: var(--text);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1.18rem;
+      padding: 0.9rem 1.9rem;
+      border-radius: var(--radius);
+      transition: all 0.28s ease;
+      background: rgba(255,255,255,0.55);
+      border: 1px solid rgba(198, 40, 57, 0.1);
+    }
+
+    nav a:hover {
+      background: var(--primary);
+      color: white;
+      transform: translateY(-3px);
+      box-shadow: 0 10px 24px rgba(198, 40, 57, 0.3);
+    }
+
+    main {
+      max-width: var(--content-max);
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+
+    .tabs {
+      text-align: center;
+      margin: 2rem 0 3rem;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .tab-btn {
+      background: rgba(255, 255, 255, 0.6);
+      color: #555;
+      border: 1px solid rgba(198, 40, 57, 0.2);
+      padding: 0.9rem 1.6rem;
+      border-radius: 12px;
+      cursor: pointer;
+      font-size: 1.05rem;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+
+    .tab-btn.active {
+      background: var(--primary);
+      color: white;
+      box-shadow: 0 6px 16px rgba(198, 40, 57, 0.3);
+      border-color: var(--primary);
+    }
+
+    .tab-content {
+      display: none;
+      animation: fadeIn 0.4s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    .chat-section {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      padding: 2.5rem;
+      margin-bottom: var(--section-gap);
+      box-shadow: 0 8px 28px rgba(0,0,0,0.06);
+      border: 1px solid rgba(198, 40, 57, 0.1);
+    }
+
+    h2 {
+      color: var(--primary);
+      border-bottom: 2px solid var(--secondary);
+      padding-bottom: 8px;
+      margin-top: 2rem;
+      font-size: 1.5rem;
+    }
+
+    .scenario {
+      font-size: 1.25rem;
+      color: #444;
+      margin-bottom: 2rem;
+      text-align: center;
+      font-weight: 500;
+    }
+
+    .phrase {
+      background: rgba(255, 255, 255, 0.7);
+      padding: 1.8rem;
+      margin: 1.5rem 0;
+      border-radius: 16px;
+      border-left: 6px solid var(--primary);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+    }
+
+    .jp {
+      font-size: 1.6rem;
+      font-weight: 700;
+      margin-bottom: 0.6rem;
+      color: var(--text);
+    }
+
+    .romaji {
+      font-size: 1.15rem;
+      color: #666;
+      font-style: italic;
+      margin-bottom: 0.8rem;
+    }
+
+    .zh {
+      font-size: 1.25rem;
+      color: var(--primary-dark);
+      font-weight: 500;
+    }
+
+    .explain {
+      background: var(--bg-light);
+      padding: 1.2rem;
+      border-radius: 10px;
+      margin-top: 1.2rem;
+      display: none;
+      font-size: 1.05rem;
+      color: #444;
+      border: 1px dashed var(--primary);
+    }
+
+    .controls {
+      margin-top: 1.5rem;
+    }
+
+    button.action-btn {
+      background: var(--accent-green);
+      color: white;
+      border: none;
+      padding: 0.8rem 1.4rem;
+      margin-right: 0.5rem;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 1rem;
+      font-weight: 600;
+      transition: all 0.28s ease;
+    }
+
+    button.action-btn:hover {
+      background: #7a9a5a;
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(139, 172, 107, 0.3);
+    }
+
+    /* 速度切換按鈕使用主系統的強調色 */
+    #speedToggle {
+      background: var(--primary);
+      color: white;
+      padding: 1rem 2.2rem;
+      font-size: 1.1rem;
+      border-radius: 50px;
+      border: none;
+      cursor: pointer;
+      font-weight: bold;
+      transition: all 0.3s ease;
+      box-shadow: 0 6px 20px rgba(198, 40, 57, 0.2);
+    }
+
+    #speedToggle:hover {
+        background: var(--primary-dark);
+        transform: scale(1.05);
+    }
+
+    .status {
+      font-weight: bold;
+      color: var(--primary);
+      margin-left: 10px;
+    }
+
+    .note {
+      font-size: 1rem;
+      color: #555;
+      text-align: center;
+      margin: 3rem 0;
+      line-height: 1.8;
+      padding: 0 1rem;
+    }
+
+    footer {
+      text-align: center;
+      padding: 5rem 1.5rem 4rem;
+      color: var(--text);
+      font-size: 1.05rem;
+      border-top: 1px solid rgba(198, 40, 57, 0.1);
+      opacity: 0.7;
+    }
+
+    @media (max-width: 768px) {
+      header { padding: 4rem 1.2rem 3rem; }
+      header h1 { font-size: 3.2rem; }
+      .chat-section { padding: 1.5rem; }
+      .jp { font-size: 1.4rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>找我聊天 📩</h1>
+    <p>用日文同山田さん傾計、邀約、回應練習頁～(≧▽≦)</p>
+  </header>
+
+  <nav>
+    <ul>
+      <li><a href="https://codepen.io/Yoru-_01/full/ogzjjbM">首頁🏠</a></li>
+      <li><a href="https://codepen.io/Yoru-_01/full/vEXNNLv">詞彙表📝</a></li>
+      <li><a href="https://codepen.io/Yoru-_01/full/ByLooKB">找我聊天📩</a></li>
+      <li><a href="#">課程📚</a></li>
+      <li><a href="#">社區💬</a></li>
+    </ul>
+  </nav>
+
+  <main>
+    <div style="text-align:center; margin:3rem 0;">
+      <button id="speedToggle" onclick="toggleSpeed()">目前：正常速度</button>
+      <span class="status" id="speedStatus">（正常 ≈ 0.95x）</span>
+    </div>
+
+    <div class="tabs">
+      <button class="tab-btn active" onclick="openTab('greeting')">日常問候</button>
+      <button class="tab-btn" onclick="openTab('walk')">邀約散步</button>
+      <button class="tab-btn" onclick="openTab('lunch')">邀約午餐</button>
+      <button class="tab-btn" onclick="openTab('movie')">邀約電影</button>
+      <button class="tab-btn" onclick="openTab('reply')">回應練習</button>
+    </div>
+
+    <div id="greeting" class="tab-content active">
+      <div class="chat-section">
+        <p class="scenario">最基本的開場白與心情分享～</p>
+        <div class="phrase">
+          <div class="jp">山田さん、お元気～？今日どうだった？</div>
+          <div class="zh">山田さん，最近好嗎～？今日過得點呀？</div>
+          <div class="controls">
+            <button class="action-btn" onclick="speak('山田さん、お元気～？今日どうだった？')">讀（日文）</button>
+            <button class="action-btn" onclick="showExp('exp-g1')">解釋</button>
+          </div>
+          <div id="exp-g1" class="explain">輕鬆親切，像朋友聊天。</div>
+        </div>
+        <div class="phrase">
+          <div class="jp">今日ちょっと疲れた…山田さんに癒されたいな</div>
+          <div class="zh">今日有啲攰…想俾山田さん療癒下～</div>
+          <div class="controls">
+            <button class="action-btn" onclick="speak('今日ちょっと疲れた…山田さんに癒されたいな')">讀（日文）</button>
+            <button class="action-btn" onclick="showExp('exp-g2')">解釋</button>
+          </div>
+          <div id="exp-g2" class="explain">撒嬌求安慰，增加親密度。</div>
+        </div>
+      </div>
+    </div>
+
+    <div id="walk" class="tab-content">
+      <div class="chat-section">
+        <p class="scenario">天氣好時最啱用嘅邀約～</p>
+        <h2>最自然版</h2>
+        <div class="phrase">
+          <div class="jp">今日天気いいね、一緒に散步しない？</div>
+          <div class="romaji">Kyō tenki ii ne, issho ni sanpo shinai?</div>
+          <div class="zh">今日天氣好好喎，一齊去散吓步啦？</div>
+          <div class="controls">
+            <button class="action-btn" onclick="speak('今日天気いいね、一緒に散步しない？')">讀（日文）</button>
+            <button class="action-btn" onclick="showExp('exp-w1')">解釋</button>
+          </div>
+          <div id="exp-w1" class="explain">最地道，輕鬆試探。</div>
+        </div>
+        <h2>甜 / 曖昧版</h2>
+        <div class="phrase">
+          <div class="jp">ねぇ、今日は天気いいし…一緒に散步しよ？♡</div>
+          <div class="zh">今日天氣咁好，陪我散吓步好唔好呀～？</div>
+          <div class="controls">
+            <button class="action-btn" onclick="speak('ねぇ、今日は天気いいし…一緒に散步しよ？')">讀（日文）</button>
+            <button class="action-btn" onclick="showExp('exp-w2')">解釋</button>
+          </div>
+          <div id="exp-w2" class="explain">撒嬌親密，適合對心儀對象使用。</div>
+        </div>
+      </div>
+    </div>
+
+    <div id="lunch" class="tab-content">
+      <div class="chat-section">
+        <p class="scenario">中午12點左右最自然嘅邀約～</p>
+        <div class="phrase">
+          <div class="jp">もう12時ですよ。一緒に昼ごはん食べに行きませんか？</div>
+          <div class="romaji">Mō juuniji desu yo. Issho ni hirugohan tabe ni ikimasen ka?</div>
+          <div class="zh">已經十二點喇！一齊去食晏飯啦？</div>
+          <div class="controls">
+            <button class="action-btn" onclick="speak('もう12時ですよ。一緒に昼ごはん食べに行きませんか？')">讀（日文）</button>
+            <button class="action-btn" onclick="showExp('exp-l1')">解釋</button>
+          </div>
+          <div id="exp-l1" class="explain">標準親切邀約，適合同事或普通朋友。</div>
+        </div>
+        <div class="phrase">
+          <div class="jp">12時じゃん！メシ行こー！</div>
+          <div class="zh">十二點喇！食飯走啦～</div>
+          <div class="controls">
+            <button class="action-btn" onclick="speak('12時じゃん！メシ行こー！')">讀（日文）</button>
+            <button class="action-btn" onclick="showExp('exp-l2')">解釋</button>
+          </div>
+          <div id="exp-l2" class="explain">熟人、死黨專用的超隨意表達。</div>
+        </div>
+      </div>
+    </div>
+
+    <div id="movie" class="tab-content">
+      <div class="chat-section">
+        <p class="scenario">邀約睇電影（Date或想升溫時最啱！）</p>
+        <div class="phrase">
+          <div class="jp">映画見に行かない？</div>
+          <div class="romaji">Eiga mi ni ikanai?</div>
+          <div class="zh">一齊去睇電影啦？</div>
+          <div class="controls">
+            <button class="action-btn" onclick="speak('映画見に行かない？')">讀（日文）</button>
+            <button class="action-btn" onclick="showExp('exp-m1')">解釋</button>
+          </div>
+          <div id="exp-m1" class="explain">最簡單自然，好熟或年輕人常用。</div>
+        </div>
+        <div class="phrase">
+          <div class="jp">よろしければ、ご一緒に映画をご覧になりませんか。</div>
+          <div class="zh">如果唔介意嘅話，不如一齊睇場電影啦？</div>
+          <div class="controls">
+            <button class="action-btn" onclick="speak('よろしければ、ご一緒に映画をご覧になりませんか。')">讀（日文）</button>
+            <button class="action-btn" onclick="showExp('exp-m2')">解釋</button>
+          </div>
+          <div id="exp-m2" class="explain">超有禮、尊重對方，適合第一次邀約。</div>
+        </div>
+      </div>
+    </div>
+
+    <div id="reply" class="tab-content">
+      <div class="chat-section">
+        <p class="scenario">被邀約或山田さん搵你時，點樣接話最自然？</p>
+        <h2>接受邀約</h2>
+        <div class="phrase">
+          <div class="jp">いいね！行こ！</div>
+          <div class="zh">好呀！走啦！</div>
+          <div class="controls">
+            <button class="action-btn" onclick="speak('いいね！行こ！')">讀（日文）</button>
+          </div>
+        </div>
+        <div class="phrase">
+          <div class="jp">ぜひ！一緒に行きましょう～</div>
+          <div class="zh">一定！一齊去啦～</div>
+          <div class="controls">
+            <button class="action-btn" onclick="speak('ぜひ！一緒に行きましょう～')">讀（日文）</button>
+          </div>
+        </div>
+        <h2>婉轉拒絕</h2>
+        <div class="phrase">
+          <div class="jp">あ、今日はちょっと… また誘ってね！</div>
+          <div class="romaji">A, kyō wa chotto... Mata sasotte ne!</div>
+          <div class="zh">哎呀，今日有啲… 下次再約我啦！</div>
+          <div class="controls">
+            <button class="action-btn" onclick="speak('あ、今日はちょっと… また誘ってね！')">讀（日文）</button>
+            <button class="action-btn" onclick="showExp('exp-r1')">解釋</button>
+          </div>
+          <div id="exp-r1" class="explain">先表示遺憾 + 下次邀請，唔傷感情。</div>
+        </div>
+      </div>
+    </div>
+
+    <p class="note">
+      五個類別任你切換 → 慢速跟讀每個音 → 大聲練習！<br>
+      由邀約到回應都練熟，同山田さん對話會好自然～ 😏
+    </p>
+  </main>
+
+  <footer>
+    © 2026 山田さん！IoT智慧學習系統｜點 🔊 聽發音，一起輕鬆學～(>ω<)
+  </footer>
+
+  <script>
+    let isSlow = false;
+    const normalRate = 0.95;
+    const slowRate = 0.70;
+
+    function toggleSpeed() {
+      isSlow = !isSlow;
+      const btn = document.getElementById('speedToggle');
+      const status = document.getElementById('speedStatus');
+      
+      if (isSlow) {
+        btn.textContent = '切換到正常速度';
+        status.textContent = '（慢速 ≈ 0.70x）';
+        // 慢速時改為灰色，表示另一種狀態
+        btn.style.background = '#8bac6b'; 
+      } else {
+        btn.textContent = '切換到慢速';
+        status.textContent = '（正常 ≈ 0.95x）';
+        btn.style.background = '#c62839'; 
+      }
+    }
+
+    function speak(text) {
+      if ('speechSynthesis' in window) {
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = 'ja-JP';
+        utterance.rate = isSlow ? slowRate : normalRate;
+        utterance.pitch = 1.05;
+        window.speechSynthesis.cancel();
+        window.speechSynthesis.speak(utterance);
+      } else {
+        alert('你的瀏覽器唔支援語音朗讀～');
+      }
+    }
+
+    function openTab(tabName) {
+      document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+      document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+      document.getElementById(tabName).classList.add('active');
+      event.currentTarget.classList.add('active');
+    }
+
+    function showExp(id) {
+      const el = document.getElementById(id);
+      el.style.display = (el.style.display === 'block') ? 'none' : 'block';
+    }
+  </script>
+
+</body>
+</html>
